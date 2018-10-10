@@ -15,42 +15,40 @@ class ViewController: UIViewController {
     @IBOutlet weak var uiDate: UILabel!
     @IBOutlet weak var uiImage: UIImageView!
     
+    var startDate = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())!;
+    var currentDate:Date?;
+    
+  //  var metaWeater : MetaWeater?;
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        currentDate = startDate;
+       // metaWeater = MetaWeater(startDate: startDate)
+        
+        //getData(completionHandler: handleData)
+        
+        print("asdasdasdas")
+        
+    }
+    /*
+    func handleData(weaterInfos: [WeaterInfo]){
+        print("handleData");
+        print(weaterInfos.endIndex);
+        for wi in weaterInfos{
+            print(wi.id!);
+        }
     }
 
     @IBAction func prev(_ sender: Any) {
-        
-        
-        //let url = URL(string: "https://www.metaweather.com/api/location/44418/2013/4/27/")!
-        let url = URL(string: "https://www.metaweather.com/api/location/search/?query=london")!
-        
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            guard error == nil else {
-                print("error:", error!)
-                return
-            }
-            
-            guard let data = data else {
-                print("asd")
-                return
-                
-            }
-            let json = try! JSONSerialization.jsonObject(with: data, options: []) as! [[String: AnyObject]]
-            print(json)
-            print(json[1]["id"]!)
-            
-        }
-        
-        task.resume()
         
     }
     @IBAction func next(_ sender: Any) {
         
     }
     
-    func changeDate(){}
+    func getData(completionHandler: @escaping ([WeaterInfo]) -> ()) {
+        metaWeater!.getData(completionHandler: completionHandler);
+    }
+ */
 }
 
