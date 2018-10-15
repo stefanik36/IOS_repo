@@ -10,44 +10,46 @@ import Foundation
 
 class MetaWeaterService{
     
-    init(startDate: Date,  completionHandler: @escaping ([WeaterInfo]) -> ()) {
+    init(startDate: Date, completionHandler: @escaping ([Date: WeaterInfo]) -> ()) {
         self.startDate = startDate
         self.completionHandler = completionHandler
     }
-    var maxRequests:Int=1;
+    var maxRequests:Int=30;
     var currentRequest:Int=1;
     var startDate:Date;
-    var weaterInfos:[WeaterInfo]=[];
+    var weaterInfos:[Date: WeaterInfo]=[:];
     var isComplete:Bool = false;
     var calendar:Calendar = Calendar.current;
     
-    var completionHandler: ([WeaterInfo]) -> ();
+    var completionHandler: ([Date: WeaterInfo]) -> ();
     
      func getData() {
         isComplete = false;
         var date = startDate;
         for _ in 1...maxRequests {
-            let year = calendar.component(.year, from: date)
-            let month = calendar.component(.month, from: date)
-            let day = calendar.component(.day, from: date)
-            getFromOneDay(year: year,month: month,day: day,completionHandler: fill)
+            getFromOneDay(date: date,completionHandler: fill)
             date = calendar.date(byAdding: .day, value: 1, to: date)!
         }
      }
      
-     func fill(json:[[String: AnyObject]]){
-        print("end index: ")
-        print(json.endIndex);
+    func fill(json:[[String: AnyObject]],date:Date){
+        print("end index: \(json.endIndex)")
+        print("\(json.endIndex) && cr: \(currentRequest) mr: \(maxRequests)");
          if(json.endIndex>0 && currentRequest<maxRequests){
-            weaterInfos.append(WeaterInfo(dictionary: json[json.endIndex/2]))
+            let wi = WeaterInfo(dictionary: json[json.endIndex/2])
+            weaterInfos.updateValue(wi, forKey: date)
             currentRequest = currentRequest+1
          }else{
             self.completionHandler(weaterInfos)
          }
      }
      
-     private func getFromOneDay(year:Int, month:Int, day:Int, completionHandler: @escaping ([[String: AnyObject]]) -> ()){
+     private func getFromOneDay(date:Date, completionHandler: @escaping ([[String: AnyObject]],Date) -> ()){
      
+        let year = calendar.component(.year, from: date)
+        let month = calendar.component(.month, from: date)
+        let day = calendar.component(.day, from: date)
+        
         let url = URL(string: "https://www.metaweather.com/api/location/44418/\(year)/\(month)/\(day)/")!
         print(url)
         //let url = URL(string: "https://www.metaweather.com/api/location/search/?query=london")!
@@ -64,7 +66,7 @@ class MetaWeaterService{
              
              }
              let json = try! JSONSerialization.jsonObject(with: data, options: []) as! [[String: AnyObject]]
-             completionHandler(json)
+             completionHandler(json,date)
          }
          task.resume()
      }
