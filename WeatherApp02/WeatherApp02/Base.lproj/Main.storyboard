@@ -131,12 +131,17 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BUN-Rq-vSX">
+                                <rect key="frame" x="67" y="441" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="dateUI" destination="1Cc-ex-dBR" id="T6B-hE-H6c"/>
+                        <outlet property="imageUI" destination="BUN-Rq-vSX" id="iyt-ko-nkm"/>
                         <outlet property="maxTempUI" destination="FCI-fH-a4S" id="7gR-5F-2cW"/>
                         <outlet property="minTempUI" destination="5Rj-GL-LjP" id="yRA-F2-sxw"/>
                         <outlet property="nextUI" destination="TfQ-oj-RZQ" id="8o5-fm-eui"/>

@@ -48,6 +48,8 @@ class WeaterInfo {
     var visibility: Double?;
     var predictability: Int?;
     
+    var image: Data?;
+    
     enum CompassPoint {
         case N
         case S

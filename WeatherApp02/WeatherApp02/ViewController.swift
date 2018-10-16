@@ -23,6 +23,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var dateUI: UILabel!
     
+    @IBOutlet weak var imageUI: UIImageView!
     
     
     
@@ -84,6 +85,8 @@ class ViewController: UIViewController {
         let wi = self.weaterInfos?[date]
         self.currentDate = date
         
+        print("set weather \(self.dateFormatterPrint.string(from: date)) \(String(describing: wi))")
+        
         DispatchQueue.main.async {
             
             self.dateUI.text = self.dateFormatterPrint.string(from: date)
@@ -96,6 +99,21 @@ class ViewController: UIViewController {
             self.windDirectionUI.text = "\(wi?.windDirection ?? 666)"
             self.windDirectionCompassUI.text = "\(wi?.windDirectionCompass.debugDescription ?? "?")"
             
+            let data = wi?.image
+            print("data: \(String(describing: data)) ")
+            let im = UIImage(data: data!)
+            print("im: \(String(describing: im)) ")
+            self.imageUI.image = im
+            
+            
+            let url = URL(string: "https://www.metaweather.com/static/img/weather/s.svg")
+            
+            DispatchQueue.global().async {
+                let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+                DispatchQueue.main.async {
+                    self.imageUI.image = UIImage(data: data!)
+                }
+            }
             
             self.setButtonsAbility();
         }
@@ -104,6 +122,7 @@ class ViewController: UIViewController {
     
     func setFirst(){
         //let first = self.weaterInfos?[(self.weaterInfos?.endIndex)!]
+        print("first")
         setWeather(date: startDate)
         
         //print("handleData");

@@ -14,7 +14,7 @@ class MetaWeaterService{
         self.startDate = startDate
         self.completionHandler = completionHandler
     }
-    var maxRequests:Int=30;
+    var maxRequests:Int=2;
     var currentRequest:Int=1;
     var startDate:Date;
     var weaterInfos:[Date: WeaterInfo]=[:];
@@ -22,6 +22,19 @@ class MetaWeaterService{
     var calendar:Calendar = Calendar.current;
     
     var completionHandler: ([Date: WeaterInfo]) -> ();
+    
+    var dictionary: [String: String] = [
+        "Snow": "s",
+        "Sleet": "sl",
+        "Hail": "h",
+        "Thunderstorm": "t",
+        "Heavy Rain": "hr",
+        "Light Rain": "lr",
+        "Showers": "s",
+        "Heavy Cloud": "hc",
+        "Light Cloud": "lc",
+        "Clear": "c"
+    ];
     
      func getData() {
         isComplete = false;
@@ -32,19 +45,45 @@ class MetaWeaterService{
         }
      }
      
-    func fill(json:[[String: AnyObject]],date:Date){
+    func fill(json:[[String: AnyObject]],img:Data?,date:Date){
         print("end index: \(json.endIndex)")
         print("\(json.endIndex) && cr: \(currentRequest) mr: \(maxRequests)");
+        
+        if(json.endIndex>0){
+            let wi = WeaterInfo(dictionary: json[json.endIndex/2])
+            wi.image = img
+            weaterInfos.updateValue(wi, forKey: date)
+            
+        }
+        if(currentRequest >= maxRequests && !isComplete){
+            self.isComplete = true
+            self.completionHandler(weaterInfos)
+        }
+        currentRequest = currentRequest+1
+        
+         /*
          if(json.endIndex>0 && currentRequest<maxRequests){
             let wi = WeaterInfo(dictionary: json[json.endIndex/2])
+            wi.image = img
+            print("\(img!.debugDescription)")
             weaterInfos.updateValue(wi, forKey: date)
-            currentRequest = currentRequest+1
+            urrentRequest = currentRequest+1
          }else{
             self.completionHandler(weaterInfos)
          }
+ */
      }
+    
+    private func getImageData(name: String) -> Data{
+        print("1")
+        let url = URL(string: "https://www.metaweather.com/static/img/weather/s.svg")
+        print("2")
+        let data = try? Data(contentsOf: url!)
+        print("3")
+        return data!
+    }
      
-     private func getFromOneDay(date:Date, completionHandler: @escaping ([[String: AnyObject]],Date) -> ()){
+     private func getFromOneDay(date:Date, completionHandler: @escaping ([[String: AnyObject]],Data?,Date) -> ()){
      
         let year = calendar.component(.year, from: date)
         let month = calendar.component(.month, from: date)
@@ -66,7 +105,11 @@ class MetaWeaterService{
              
              }
              let json = try! JSONSerialization.jsonObject(with: data, options: []) as! [[String: AnyObject]]
-             completionHandler(json,date)
+            var img: Data? = nil;
+            if(json.endIndex>0){
+                img = self.getImageData(name: (json[json.endIndex/2]["weather_state_name"] as! String))
+            }
+            completionHandler(json,img,date)
          }
          task.resume()
      }
