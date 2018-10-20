@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  WeatherApp02
 //
-//  Created by Klaudia Tutaj on 10.10.2018.
+//  Created by Daniel Stefanik on 10.10.2018.
 //  Copyright © 2018 Dainel Stefanik. All rights reserved.
 //
 

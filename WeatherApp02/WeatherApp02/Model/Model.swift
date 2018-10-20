@@ -2,7 +2,7 @@
 //  Model.swift
 //  WeatherApp02
 //
-//  Created by Klaudia Tutaj on 10.10.2018.
+//  Created by Daniel Stefanik on 10.10.2018.
 //  Copyright © 2018 Dainel Stefanik. All rights reserved.
 //
 
@@ -17,8 +17,10 @@ class WeaterInfo {
         self.weatherStateAbbr = (dictionary["weather_state_abbr"] as! String)
         if let x = dictionary["wind_speed"] as? Double {self.windSpeed = x;}
         if let x = dictionary["wind_direction"] as? Double {self.windDirection = x}
-        //TODO
-        //wi.windDirectionCompass = CompassPoint(json[0]["wind_direction_compass"] as! String)
+        
+        print(dictionary["wind_direction_compass"]!)
+        
+        self.windDirectionCompass = CompassPoint(rawValue: (dictionary["wind_direction_compass"] as! String))!
         
         if let x = dictionary["min_temp"] as? Double {self.minTemp = x;}
         if let x = dictionary["the_temp"] as? Double {self.theTemp = x;}
@@ -49,11 +51,23 @@ class WeaterInfo {
     var predictability: Int?;
     
     var image: Data?;
-    
-    enum CompassPoint {
-        case N
-        case S
-        case E
-        case W
+    enum CompassPoint: String {
+        case N = "N"
+        case S = "S"
+        case E = "E"
+        case W = "W"
+        case NE = "NE"
+        case SE = "SE"
+        case SW = "SW"
+        case NW = "NW"
+        case NNE = "NNE"
+        case ENE = "ENE"
+        case ESE = "ESE"
+        case SSE = "SSE"
+        case SSW = "SSW"
+        case WSW = "WSW"
+        case WNW = "WNW"
+        case NNW = "NNW"
     }
+    
 }
