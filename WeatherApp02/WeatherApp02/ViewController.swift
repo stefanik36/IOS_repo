@@ -27,7 +27,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var weatherStateUI: UILabel!
     @IBOutlet weak var imageUI: UIImageView!
     
-    //@IBOutlet weak var dateUI: UILabel!
     @IBOutlet weak var dateUI: UILabel!
     @IBOutlet weak var prevUI: UIButton!
     @IBOutlet weak var nextUI: UIButton!
@@ -39,7 +38,6 @@ class ViewController: UIViewController {
     var calendar:Calendar = Calendar.current;
     let dateFormatterPrint = DateFormatter()
     
-   // var metaWeater : MetaWeaterService?;
     var weaterInfos: [Date: WeaterInfo]?;
     
     func loadingPanel(){
@@ -133,10 +131,7 @@ class ViewController: UIViewController {
         
         DispatchQueue.main.async {
             self.overlay?.removeFromSuperview()
-//            self.dismiss(animated: false, completion: nil)
             
-            
-            //self.minTempUI.text = "\(String(format:"%.1f", (wi?.minTemp)!))"
             self.minTempUI.text = (wi?.minTemp).map{"\(String(format:"%.1f", $0))"} ?? ""
       
             self.tempUI.text = (wi?.theTemp).map{"\(String(format:"%.1f", $0))"} ?? ""
