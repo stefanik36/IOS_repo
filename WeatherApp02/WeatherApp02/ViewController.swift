@@ -27,6 +27,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var weatherStateUI: UILabel!
     @IBOutlet weak var imageUI: UIImageView!
     
+    //@IBOutlet weak var dateUI: UILabel!
     @IBOutlet weak var dateUI: UILabel!
     @IBOutlet weak var prevUI: UIButton!
     @IBOutlet weak var nextUI: UIButton!
