@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F0BBA15217EFC6E0086EFCB /* MasterViewControllerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0BBA14217EFC6E0086EFCB /* MasterViewControllerTableViewController.swift */; };
+		3F0BBA17217EFE7B0086EFCB /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0BBA16217EFE7B0086EFCB /* DetailViewController.swift */; };
 		41FD03A3216E96A100611633 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FD03A2216E96A100611633 /* AppDelegate.swift */; };
 		41FD03A5216E96A100611633 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FD03A4216E96A100611633 /* ViewController.swift */; };
 		41FD03A8216E96A100611633 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41FD03A6216E96A100611633 /* Main.storyboard */; };
@@ -36,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3F0BBA14217EFC6E0086EFCB /* MasterViewControllerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewControllerTableViewController.swift; sourceTree = "<group>"; };
+		3F0BBA16217EFE7B0086EFCB /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		41FD039F216E96A100611633 /* WeatherApp02.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp02.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41FD03A2216E96A100611633 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		41FD03A4216E96A100611633 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -106,6 +110,8 @@
 				41FD03A2216E96A100611633 /* AppDelegate.swift */,
 				41FD03A4216E96A100611633 /* ViewController.swift */,
 				41FD03A6216E96A100611633 /* Main.storyboard */,
+				3F0BBA16217EFE7B0086EFCB /* DetailViewController.swift */,
+				3F0BBA14217EFC6E0086EFCB /* MasterViewControllerTableViewController.swift */,
 				41FD03A9216E96A600611633 /* Assets.xcassets */,
 				41FD03AB216E96A600611633 /* LaunchScreen.storyboard */,
 				41FD03AE216E96A600611633 /* Info.plist */,
@@ -280,6 +286,8 @@
 			files = (
 				41FD03D2216E97EA00611633 /* Model.swift in Sources */,
 				41FD03D5216E986900611633 /* Service.swift in Sources */,
+				3F0BBA15217EFC6E0086EFCB /* MasterViewControllerTableViewController.swift in Sources */,
+				3F0BBA17217EFE7B0086EFCB /* DetailViewController.swift in Sources */,
 				41FD03A5216E96A100611633 /* ViewController.swift in Sources */,
 				41FD03A3216E96A100611633 /* AppDelegate.swift in Sources */,
 			);
