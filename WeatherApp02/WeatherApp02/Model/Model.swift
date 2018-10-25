@@ -8,6 +8,22 @@
 
 import Foundation
 
+class CityInfo {
+    
+    
+    init(name:String, index:String, temp:Double, image:Data){
+        self.name = name
+        self.index = index
+        self.temp = temp
+        self.image = image
+    }
+    var name: String?
+    var index: String?
+    var temp: Double?
+    var image: Data?
+}
+
+
 class WeaterInfo {
     
     init() {}

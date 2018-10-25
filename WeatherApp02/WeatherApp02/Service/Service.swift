@@ -14,7 +14,7 @@ class MetaWeaterService{
         self.startDate = startDate
         self.completionHandler = completionHandler
     }
-    var maxRequests:Int=20;
+    var maxRequests:Int=2;
     var currentRequest:Int=1;
     var startDate:Date;
     var weaterInfos:[Date: WeaterInfo]=[:];

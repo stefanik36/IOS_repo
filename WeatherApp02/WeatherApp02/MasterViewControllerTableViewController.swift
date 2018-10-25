@@ -8,11 +8,39 @@
 
 import UIKit
 
+protocol CitySelectionDelegate: class {
+    func citySelected(_ newCity: CityInfo)
+}
+
 class MasterViewControllerTableViewController: UITableViewController {
 
+    
+    
+    weak var delegate: CitySelectionDelegate?
+    var defaultCities = ["Paris","London","Barcelona"]
+    
+    var cities:[CityInfo];
+    
+    required init?(coder aDecoder: NSCoder) {
+        
+        //Load data from defaultCities and in loop add to cities
+        
+        self.cities = [
+            CityInfo(name: defaultCities[0], index: "index #1", temp: 666.666, image: Data()),
+            CityInfo(name: defaultCities[1], index: "index #2", temp: 666.667, image: Data()),
+            CityInfo(name: defaultCities[2], index: "index #3", temp: 666.686, image: Data())
+        ]
+        
+        
+        super.init(coder: aDecoder)
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -29,17 +57,30 @@ class MasterViewControllerTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 10
+        return cities.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
-        cell.textLabel?.text = "City1"
+        let city = cities[indexPath.row]
+        cell.textLabel?.text = city.name
         // Configure the cell...
 
         return cell
+    }
+    
+  
+
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedCity = cities[indexPath.row]
+        delegate?.citySelected(selectedCity)
+        if let detailViewController = delegate as? ViewController,
+            let detailNavigationController = detailViewController.navigationController {
+            splitViewController?.showDetailViewController(detailNavigationController, sender: nil)
+        }
     }
     
 

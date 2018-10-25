@@ -40,6 +40,14 @@ class ViewController: UIViewController {
     
     var weaterInfos: [Date: WeaterInfo]?;
     
+    var city: CityInfo?{
+        didSet{
+            loadViewIfNeeded();
+//            load()
+            print("DID SET \(city?.name ?? "unknown??")")
+        }
+    }
+    
     func loadingPanel(){
         
         overlay = UIView(frame: view.frame)
@@ -76,9 +84,7 @@ class ViewController: UIViewController {
         self.dateUI.textAlignment = .center
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    func load(){
         loadingPanel()
         dateFormatterPrint.dateFormat = "dd.MM.yyyy"
         let metaWeater = MetaWeaterService(
@@ -87,6 +93,11 @@ class ViewController: UIViewController {
         )
         metaWeater.getData();
         prepareView();
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        load()
     }
     
     @IBAction func nextButton(_ sender: Any) {
@@ -162,3 +173,9 @@ class ViewController: UIViewController {
     }
 }
 
+
+extension ViewController: CitySelectionDelegate {
+    func citySelected(_ newCity: CityInfo) {
+        city = newCity
+    }
+}
