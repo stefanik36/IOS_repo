@@ -11,6 +11,8 @@ import UIKit
 class ViewController: UIViewController {
 
     
+    @IBOutlet weak var cityUI: UILabel!
+    
     @IBOutlet weak var minTempUI: UITextField!
     @IBOutlet weak var tempUI: UITextField!
     @IBOutlet weak var maxTempUI: UITextField!
@@ -31,42 +33,56 @@ class ViewController: UIViewController {
     @IBOutlet weak var prevUI: UIButton!
     @IBOutlet weak var nextUI: UIButton!
     
-    var overlay : UIView?
     
-    var startDate = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())!;
-    var currentDate:Date?;
+//    var overlay : UIView?
+    
+    
+    
+//    var startDate = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())!;
+//    var metaWeater:MetaWeaterService?;
+//    var weaterInfos: [Date: WeaterInfo]?;
+    
+    
     var calendar:Calendar = Calendar.current;
+    var currentDate:Date?;
     let dateFormatterPrint = DateFormatter()
     
-    var weaterInfos: [Date: WeaterInfo]?;
+    
     
     var city: CityInfo?{
         didSet{
             loadViewIfNeeded();
-//            load()
-            print("DID SET \(city?.name ?? "unknown??")")
+            if let x = (city?.index)  {
+                
+                loadCity(cityIndex: x)
+            } 
+            
+            
+  //          print("DID SET \(city?.name ?? "unknown??")")
         }
     }
     
-    func loadingPanel(){
-        
-        overlay = UIView(frame: view.frame)
-        let title = UILabel()
-        title.text = "Loading..."
-        title.numberOfLines = 0
-        title.textAlignment = .center
-        title.textColor = UIColor.white
-        title.sizeToFit()
-        title.center = overlay!.center
-        overlay!.addSubview(title)
-        
-        overlay!.backgroundColor = UIColor.black
-        overlay!.alpha = 0.8
-        view.addSubview(overlay!)
-
-    }
+//    func loadingPanel(){
+//        
+//        overlay = UIView(frame: view.frame)
+//        let title = UILabel()
+//        title.text = "Loading..."
+//        title.numberOfLines = 0
+//        title.textAlignment = .center
+//        title.textColor = UIColor.white
+//        title.sizeToFit()
+//        title.center = overlay!.center
+//        overlay!.addSubview(title)
+//        
+//        overlay!.backgroundColor = UIColor.black
+//        overlay!.alpha = 0.8
+//        view.addSubview(overlay!)
+//
+//    }
     
     func prepareView(){
+        self.cityUI.textAlignment = .center
+        
         self.minTempUI.textAlignment = .center
         self.tempUI.textAlignment = .center
         self.maxTempUI.textAlignment = .center
@@ -82,22 +98,35 @@ class ViewController: UIViewController {
         
         self.weatherStateUI.textAlignment = .center
         self.dateUI.textAlignment = .center
+        
+        nextUI.isEnabled = false
+        prevUI.isEnabled = false
     }
     
-    func load(){
-        loadingPanel()
+    func preLoad(){
         dateFormatterPrint.dateFormat = "dd.MM.yyyy"
-        let metaWeater = MetaWeaterService(
-            startDate: startDate,
-            completionHandler: handleData
-        )
-        metaWeater.getData();
         prepareView();
+//        self.metaWeater = MetaWeaterService(
+//            startDate: startDate,
+//            completionHandler: handleData
+//        )
     }
+    
+    func loadCity(cityIndex : String){
+        
+//        loadingPanel()
+        self.currentDate = city?.weaterInfos?.sorted(by: { (s1: (Date,WeaterInfo), s2: (Date,WeaterInfo)) -> Bool in
+            return s1.0 < s2.0
+        }).first?.key
+        setWeather(date: self.currentDate!)
+//        self.metaWeater!.getData(cityIndex: cityIndex);
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        load()
+        preLoad()
+//        load()
     }
     
     @IBAction func nextButton(_ sender: Any) {
@@ -107,10 +136,10 @@ class ViewController: UIViewController {
         setWeather(date: prev())
     }
     
-    func handleData(weaterInfos: [Date: WeaterInfo]){
-        self.weaterInfos = weaterInfos
-        setFirst()
-     }
+//    func handleData(weaterInfos: [Date: WeaterInfo]){
+//        self.weaterInfos = weaterInfos
+//        setFirst()
+//     }
     
     func next() -> Date{
         return calendar.date(byAdding: .day, value: 1, to: currentDate!)!
@@ -121,11 +150,11 @@ class ViewController: UIViewController {
     }
     
     func hasNext() -> Bool{
-        return (self.weaterInfos?[next()] != nil)
+        return (self.city?.weaterInfos![next()] != nil)
     }
     
     func hasPrev() -> Bool{
-        return (self.weaterInfos?[prev()] != nil)
+        return (self.city?.weaterInfos![prev()] != nil)
     }
     
     func setButtonsAbility(){
@@ -134,14 +163,16 @@ class ViewController: UIViewController {
     }
     
     func setWeather(date:Date){
-        let wi = self.weaterInfos?[date]
+        
+        let wi = self.city?.weaterInfos![date]
         self.currentDate = date
         
-        print("set weather \(self.dateFormatterPrint.string(from: date)) \(String(describing: wi)) img:")
-        print((wi?.image)!)
+ //       print("set weather \(self.dateFormatterPrint.string(from: date)) \(String(describing: wi)) img:")
+ //       print((wi?.image)!)
         
         DispatchQueue.main.async {
-            self.overlay?.removeFromSuperview()
+            
+            self.cityUI.text = self.city?.name
             
             self.minTempUI.text = (wi?.minTemp).map{"\(String(format:"%.1f", $0))"} ?? ""
       
@@ -164,13 +195,15 @@ class ViewController: UIViewController {
             self.dateUI.text = self.dateFormatterPrint.string(from: date)
             
             self.setButtonsAbility();
+//
+//            self.overlay?.removeFromSuperview()
         }
         
     }
     
-    func setFirst(){
-        setWeather(date: startDate)
-    }
+//    func setFirst(){
+//        setWeather(date: startDate)
+//    }
 }
 
 

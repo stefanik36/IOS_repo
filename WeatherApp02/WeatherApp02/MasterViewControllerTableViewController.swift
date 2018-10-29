@@ -13,32 +13,86 @@ protocol CitySelectionDelegate: class {
 }
 
 class MasterViewControllerTableViewController: UITableViewController {
-
     
+    @IBOutlet weak var addCityUI: UIButton!
+    
+//    var overlay : UIView?
     
     weak var delegate: CitySelectionDelegate?
     var defaultCities = ["Paris","London","Barcelona"]
     
-    var cities:[CityInfo];
+    var cities: [CityInfo]{
+        didSet{
+            print("ARR CHANGE \(cities.endIndex)")
+            for c in cities {
+                print(c.name!)
+            }
+            refresh()
+        }
+    }
+    var startDate: Date;
+    //var metaWeater: MetaWeater02Service?;
+    
+//    func loadingPanel(){
+//
+//        overlay = UIView(frame: view.frame)
+//        let title = UILabel()
+//        title.text = "Loading..."
+//        title.numberOfLines = 0
+//        title.textAlignment = .center
+//        title.textColor = UIColor.white
+//        title.sizeToFit()
+//        title.center = overlay!.center
+//        overlay!.addSubview(title)
+//
+//        overlay!.backgroundColor = UIColor.black
+//        overlay!.alpha = 0.8
+//        view.addSubview(overlay!)
+//
+//    }
+    
+    func refresh(){
+        self.tableView.reloadData()
+        DispatchQueue.main.async {
+            self.refreshControl = UIRefreshControl()
+        }
+    }
     
     required init?(coder aDecoder: NSCoder) {
         
-        //Load data from defaultCities and in loop add to cities
-        
-        self.cities = [
-            CityInfo(name: defaultCities[0], index: "index #1", temp: 666.666, image: Data()),
-            CityInfo(name: defaultCities[1], index: "index #2", temp: 666.667, image: Data()),
-            CityInfo(name: defaultCities[2], index: "index #3", temp: 666.686, image: Data())
-        ]
-        
+        self.startDate = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())!
+        self.cities = []
         
         super.init(coder: aDecoder)
+        for cn in defaultCities {
+            let metaWeater = MetaWeater02Service()
+            metaWeater.findCity(name: cn, completionHandler: addFirstAsCity)
+        }
+       
+        
     }
     
+    func addFirstAsCity(dict: [String : String]){
+        addNewCity(cityIndex: (dict.first?.key)!, cityName: (dict.first?.value)!)
+    }
+    
+    func addNewCity(cityIndex: String, cityName: String){
+        let metaWeater = MetaWeater02Service()
+        metaWeater.getData(cityIndex: cityIndex, cityName: cityName, startDate: startDate, completionHandler: setData)
+    }
+    
+    func setData(city: CityInfo){
+        cities.append(city)
+    }
+
+    @IBAction func addCity(_ sender: Any) {
+        print("new City")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+//        loadingPanel()
+        self.addCityUI.setTitle("+", for: .normal)
         
         
         // Uncomment the following line to preserve selection between presentations
@@ -59,27 +113,54 @@ class MasterViewControllerTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         return cities.count
     }
-
+    class NameAndPictureCell: UITableViewCell {
+        @IBOutlet weak var cityUI: UILabel!
+        @IBOutlet weak var tempUI: UILabel!
+        @IBOutlet weak var imageUI: UIImageView!
+        
+    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-
-        let city = cities[indexPath.row]
-        cell.textLabel?.text = city.name
-        // Configure the cell...
-
-        return cell
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        //        cell.textLabel?.text = city.name
+        //        cell.detailTextLabel?.text = (city.temp).map{"\(String(format:"%.1f", $0))"} ?? ""
+        // print("_________________")
+        //        print(city.image!)
+        //        if let x = (city.image).map({UIImage(data: $0)})  {cell.imageView?.image = x;}
+        
+        //        return cell
+        let cc = NameAndPictureCell()
+        if(!cities.isEmpty){
+            let city = cities[indexPath.row]
+            print(city.name ?? "??")
+            cc.cityUI.text = city.name ?? "?? "
+            cc.tempUI.text = (city.temp).map{"\(String(format:"%.1f", $0))"} ?? "?? "
+            if let x = (city.image).map({UIImage(data: $0)})  {cc.imageUI?.image = x;}
+        }
+        return cc
     }
     
   
 
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedCity = cities[indexPath.row]
-        delegate?.citySelected(selectedCity)
-        if let detailViewController = delegate as? ViewController,
-            let detailNavigationController = detailViewController.navigationController {
-            splitViewController?.showDetailViewController(detailNavigationController, sender: nil)
+        if (!cities.isEmpty){
+            
+//            self.overlay?.removeFromSuperview()
+            
+            let selectedCity = cities[indexPath.row]
+            delegate?.citySelected(selectedCity)
+            if let detailViewController = delegate as? ViewController,
+                let detailNavigationController = detailViewController.navigationController {
+                splitViewController?.showDetailViewController(detailNavigationController, sender: nil)
+            }
+//            self.performSegue(withIdentifier: "ViewController", sender: self)
+            
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            let controller = storyboard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+//            self.navigationController?.pushViewController(controller, animated: true)
+
+            
         }
     }
     

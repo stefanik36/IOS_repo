@@ -17,7 +17,7 @@
             </objects>
             <point key="canvasLocation" x="-3703" y="-532"/>
         </scene>
-        <!--Root View Controller-->
+        <!--Daniel Stefanik-->
         <scene sceneID="bvP-th-kJv">
             <objects>
                 <tableViewController clearsSelectionOnViewWillAppear="NO" id="7zS-Gj-89L" customClass="MasterViewControllerTableViewController" customModule="WeatherApp02" customModuleProvider="target" sceneMemberID="viewController">
@@ -26,22 +26,62 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="7PZ-QB-Sd3" style="IBUITableViewCellStyleDefault" id="Hsc-XF-gql">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="7PZ-QB-Sd3" detailTextLabel="1AO-LY-Eje" style="IBUITableViewCellStyleValue2" id="Hsc-XF-gql">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Hsc-XF-gql" id="X7s-vU-gSH">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7PZ-QB-Sd3">
-                                            <rect key="frame" x="16" y="0.0" width="343" height="43.666666666666664"/>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="City" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7PZ-QB-Sd3">
+                                            <rect key="frame" x="16" y="14" width="91" height="15.666666666666666"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Temp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1AO-LY-Eje">
+                                            <rect key="frame" x="112.99999999999999" y="14" width="33.333333333333336" height="15.666666666666666"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Qjl-EX-eEO">
+                                <rect key="frame" x="0.0" y="72" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Qjl-EX-eEO" id="UzR-6a-osN">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Temp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oop-eg-pLj">
+                                            <rect key="frame" x="83" y="12" width="43" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F0p-VT-T7R">
+                                            <rect key="frame" x="16" y="6" width="29" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="City" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="45W-go-Fz7">
+                                            <rect key="frame" x="172" y="12" width="31" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="cityUI" destination="45W-go-Fz7" id="9wX-Cg-z3N"/>
+                                    <outlet property="imageUI" destination="F0p-VT-T7R" id="i08-rc-PkG"/>
+                                    <outlet property="tempUI" destination="Oop-eg-pLj" id="HnU-zx-ffG"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -49,11 +89,34 @@
                             <outlet property="delegate" destination="7zS-Gj-89L" id="GFG-Jm-9G8"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="kOz-U3-7Dq"/>
+                    <navigationItem key="navigationItem" title="Daniel Stefanik" id="kOz-U3-7Dq">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="CT8-vS-aSp">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="bfu-62-nTl">
+                                <rect key="frame" x="276" y="7" width="83" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" identifier="AddCity" label="Add"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="addCity:" destination="7zS-Gj-89L" eventType="touchUpInside" id="ceo-hP-cBU"/>
+                                    <action selector="addCityAct:" destination="7zS-Gj-89L" eventType="touchUpInside" id="dxH-OL-v96"/>
+                                </connections>
+                            </button>
+                            <connections>
+                                <action selector="addCity:" destination="7zS-Gj-89L" id="EiQ-RJ-yAq"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="bVB-bc-dAx">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </refreshControl>
+                    <connections>
+                        <outlet property="AddCityUI" destination="CT8-vS-aSp" id="X6B-gI-Qvq"/>
+                        <outlet property="addCityUI" destination="bfu-62-nTl" id="9Vm-lB-KhS"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hca-Ek-Ige" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2289" y="-1182"/>
+            <point key="canvasLocation" x="-2290.4000000000001" y="-1182.2660098522167"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Eg5-Sz-VSU">
@@ -333,11 +396,17 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Daniel Stefanik" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lR6-dZ-qph">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Daniel Stefanik" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lR6-dZ-qph">
                                 <rect key="frame" x="130.66666666666666" y="108" width="114" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="yRP-bV-uBZ"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="City" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b9N-S1-rzd">
+                                <rect key="frame" x="172.33333333333334" y="93" width="30.333333333333343" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -369,11 +438,13 @@
                             <constraint firstItem="xiZ-1Q-Uil" firstAttribute="top" secondItem="NAX-ua-8qZ" secondAttribute="bottom" id="S89-SL-E4p"/>
                             <constraint firstItem="Hat-Gu-9kb" firstAttribute="top" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="60" id="SWH-Bx-5Yg"/>
                             <constraint firstItem="Er0-Wm-iVR" firstAttribute="top" secondItem="oLu-Cg-j7o" secondAttribute="bottom" id="TbW-SO-sC0"/>
+                            <constraint firstItem="b9N-S1-rzd" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="VaH-10-re0"/>
                             <constraint firstItem="ncK-yi-2ZD" firstAttribute="top" secondItem="jDC-2c-Uc8" secondAttribute="bottom" id="Vkb-CO-M4U"/>
                             <constraint firstItem="wOY-2O-dCU" firstAttribute="top" secondItem="Er0-Wm-iVR" secondAttribute="bottom" id="Vzk-Xl-u7B"/>
                             <constraint firstItem="oLu-Cg-j7o" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="WSN-ut-kDc"/>
                             <constraint firstItem="FCI-fH-a4S" firstAttribute="top" secondItem="5Rj-GL-LjP" secondAttribute="bottom" id="WbJ-yq-Jr2"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="1Cc-ex-dBR" secondAttribute="bottom" constant="30" id="XZ7-q4-mYp"/>
+                            <constraint firstItem="b9N-S1-rzd" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="5" id="YTp-ad-DgV"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="BUN-Rq-vSX" secondAttribute="bottom" constant="90" id="YZW-Ye-bLF"/>
                             <constraint firstItem="dhy-Fm-PVN" firstAttribute="top" secondItem="BnQ-C3-bo5" secondAttribute="bottom" id="Yce-Bm-ohN"/>
                             <constraint firstItem="BUN-Rq-vSX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="Ydi-Oy-wtY"/>
@@ -387,6 +458,7 @@
                             <constraint firstItem="3hS-jf-VP0" firstAttribute="top" secondItem="YHq-Fd-JhY" secondAttribute="bottom" id="hwj-Yx-r10"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="KLN-XJ-8bp" secondAttribute="trailing" constant="10" id="iEa-uk-kWg"/>
                             <constraint firstItem="W9h-Kp-GVw" firstAttribute="top" secondItem="KLN-XJ-8bp" secondAttribute="bottom" id="iHj-9Z-L2E"/>
+                            <constraint firstItem="b9N-S1-rzd" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="j85-lC-b2E"/>
                             <constraint firstItem="jDC-2c-Uc8" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="kfp-ZC-Fni"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dhy-Fm-PVN" secondAttribute="trailing" constant="10" id="lSh-ds-0Lu"/>
                             <constraint firstItem="BUN-Rq-vSX" firstAttribute="top" secondItem="Hat-Gu-9kb" secondAttribute="bottom" constant="5" id="o8h-FE-p78"/>
@@ -411,6 +483,7 @@
                     </view>
                     <connections>
                         <outlet property="airPressureUI" destination="W9h-Kp-GVw" id="dr6-Fw-1YR"/>
+                        <outlet property="cityUI" destination="b9N-S1-rzd" id="bkf-Oc-09t"/>
                         <outlet property="dateUI" destination="1Cc-ex-dBR" id="hST-15-AG6"/>
                         <outlet property="humidityUI" destination="gaq-vA-4xq" id="dBw-BA-yA1"/>
                         <outlet property="imageUI" destination="BUN-Rq-vSX" id="iyt-ko-nkm"/>
@@ -429,7 +502,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2756" y="-532"/>
+            <point key="canvasLocation" x="-2756" y="-532.01970443349751"/>
         </scene>
     </scenes>
 </document>
