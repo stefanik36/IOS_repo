@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
             else { fatalError() }
         
-        print(splitViewController.viewControllers.last!)
+//        print(splitViewController.viewControllers.last!)
 
         let firstCity = masterViewController.cities.first
         detailViewController.city = firstCity

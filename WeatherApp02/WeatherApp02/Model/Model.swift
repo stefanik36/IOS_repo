@@ -38,7 +38,7 @@ class WeaterInfo {
         if let x = dictionary["wind_speed"] as? Double {self.windSpeed = x;}
         if let x = dictionary["wind_direction"] as? Double {self.windDirection = x}
         
-        print(dictionary["wind_direction_compass"]!)
+//        print(dictionary["wind_direction_compass"]!)
         
         self.windDirectionCompass = CompassPoint(rawValue: (dictionary["wind_direction_compass"] as! String))!
         

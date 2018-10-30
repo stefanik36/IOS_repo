@@ -8,6 +8,15 @@
 
 import UIKit
 
+
+class CustomCell: UITableViewCell {
+    @IBOutlet weak var cityUI: UILabel!
+    @IBOutlet weak var tempUI: UILabel!
+    @IBOutlet weak var imageUI: UIImageView!
+    
+}
+
+
 protocol CitySelectionDelegate: class {
     func citySelected(_ newCity: CityInfo)
 }
@@ -23,10 +32,10 @@ class MasterViewControllerTableViewController: UITableViewController {
     
     var cities: [CityInfo]{
         didSet{
-            print("ARR CHANGE \(cities.endIndex)")
-            for c in cities {
-                print(c.name!)
-            }
+//            print("ARR CHANGE \(cities.endIndex)")
+//            for c in cities {
+//                print(c.name!)
+//            }
             refresh()
         }
     }
@@ -86,12 +95,36 @@ class MasterViewControllerTableViewController: UITableViewController {
     }
 
     @IBAction func addCity(_ sender: Any) {
-        print("new City")
+                print("new City")
+                performSegue(withIdentifier: "newCity", sender: sender)
     }
+    //    @IBAction func addCity02(_ sender: Any) {
+//        print("new City")
+//        performSegue(withIdentifier: "newCity", sender: sender)
+//    }
+    
+    
+    
+//    @IBAction func addCity(_ sender: UIButton) {
+//        print("new City")
+//        performSegue(withIdentifier: "newCity", sender: sender)
+//    }
+    
+//    override func performSegue(withIdentifier identifier: String, sender: Any?) {
+//        print("segue - \(identifier)")
+//
+////        if let destinationViewController = segue.destination as? <NewCityController> {
+////            if let button = sender as? UIButton {
+////                secondViewController.<buttonIndex> = button.tag
+////                // Note: add/define var buttonIndex: Int = 0 in <YourDestinationViewController> and print there in viewDidLoad.
+////            }
+////
+////        }
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        loadingPanel()
+//        loadingPanel()s
         self.addCityUI.setTitle("+", for: .normal)
         
         
@@ -113,12 +146,7 @@ class MasterViewControllerTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         return cities.count
     }
-    class NameAndPictureCell: UITableViewCell {
-        @IBOutlet weak var cityUI: UILabel!
-        @IBOutlet weak var tempUI: UILabel!
-        @IBOutlet weak var imageUI: UIImageView!
-        
-    }
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 //        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
@@ -129,10 +157,13 @@ class MasterViewControllerTableViewController: UITableViewController {
         //        if let x = (city.image).map({UIImage(data: $0)})  {cell.imageView?.image = x;}
         
         //        return cell
-        let cc = NameAndPictureCell()
+        let cc = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! CustomCell
+//        let cc = CustomCell()
+        
+        
         if(!cities.isEmpty){
             let city = cities[indexPath.row]
-            print(city.name ?? "??")
+//            print(city.name ?? "??")
             cc.cityUI.text = city.name ?? "?? "
             cc.tempUI.text = (city.temp).map{"\(String(format:"%.1f", $0))"} ?? "?? "
             if let x = (city.image).map({UIImage(data: $0)})  {cc.imageUI?.image = x;}
