@@ -13,7 +13,6 @@ class CustomCell: UITableViewCell {
     @IBOutlet weak var cityUI: UILabel!
     @IBOutlet weak var tempUI: UILabel!
     @IBOutlet weak var imageUI: UIImageView!
-    
 }
 
 
@@ -77,8 +76,6 @@ class MasterViewControllerTableViewController: UITableViewController {
             let metaWeater = MetaWeater02Service()
             metaWeater.findCity(name: cn, completionHandler: addFirstAsCity)
         }
-       
-        
     }
     
     func addFirstAsCity(dict: [String : String]){
@@ -95,8 +92,8 @@ class MasterViewControllerTableViewController: UITableViewController {
     }
 
     @IBAction func addCity(_ sender: Any) {
-                print("new City")
-                performSegue(withIdentifier: "newCity", sender: sender)
+        print("new City")
+        performSegue(withIdentifier: "newCity", sender: sender)
     }
     //    @IBAction func addCity02(_ sender: Any) {
 //        print("new City")
