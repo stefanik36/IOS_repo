@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let leftNavController = splitViewController.viewControllers.first as? UINavigationController,
             let masterViewController = leftNavController.topViewController as? MasterViewControllerTableViewController,
             let detailViewController = splitViewController.viewControllers.last as? ViewController
-//            let rightNavController = splitViewController.viewControllers.last as? UINavigationController,
+//            let rightNavController = splitViewController.viewControllers.last as? UINavigationController
 //            let detailViewController = rightNavController.topViewController as? ViewController
         
             else { fatalError() }

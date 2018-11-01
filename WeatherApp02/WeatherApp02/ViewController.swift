@@ -115,7 +115,8 @@ class ViewController: UIViewController {
     func loadCity(cityIndex : String){
         
 //        loadingPanel()
-        self.currentDate = city?.weaterInfos?.sorted(by: { (s1: (Date,WeaterInfo), s2: (Date,WeaterInfo)) -> Bool in
+        let duplicate = (city?.weaterInfos)!
+        self.currentDate = duplicate.sorted(by: { (s1: (Date,WeaterInfo), s2: (Date,WeaterInfo)) -> Bool in
             return s1.0 < s2.0
         }).first?.key
         setWeather(date: self.currentDate!)

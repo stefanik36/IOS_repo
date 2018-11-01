@@ -45,7 +45,9 @@ class NewCityController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     @IBAction func cancel(_ sender: Any) {
         print("cancel")
-        _ = navigationController?.popToRootViewController(animated: true)
+//        dismiss(animated: true, completion: nil)
+        _ = navigationController?.popViewController(animated: true)
+//        _ = navigationController?.popToRootViewController(animated: true)
 //        performSegue(withIdentifier: "cancel", sender: sender)
         
     }

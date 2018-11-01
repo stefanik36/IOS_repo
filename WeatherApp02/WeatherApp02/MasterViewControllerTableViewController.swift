@@ -14,14 +14,24 @@ class CustomCell: UITableViewCell {
     @IBOutlet weak var tempUI: UILabel!
     @IBOutlet weak var imageUI: UIImageView!
 }
-
-
+//
+//extension AppDelegate : UISplitViewControllerDelegate {
+//    func splitViewController(_ svc: UISplitViewController, collapseSecondary vc2: UIViewController, onto vc1: UIViewController) -> Bool {
+//        return true
+//    }
+//}
+extension MasterViewControllerTableViewController: UISplitViewControllerDelegate {
+    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
+        return collapseDetailViewController
+    }
+}
 protocol CitySelectionDelegate: class {
     func citySelected(_ newCity: CityInfo)
 }
 
 class MasterViewControllerTableViewController: UITableViewController {
-    
+    fileprivate var collapseDetailViewController = true
+
     @IBOutlet weak var addCityUI: UIButton!
     
 //    var overlay : UIView?
@@ -60,14 +70,15 @@ class MasterViewControllerTableViewController: UITableViewController {
 //    }
     
     func refresh(){
-        self.tableView.reloadData()
+        print("refresh")
         DispatchQueue.main.async {
+            self.tableView.reloadData()
             self.refreshControl = UIRefreshControl()
         }
     }
     
     required init?(coder aDecoder: NSCoder) {
-        
+        print("init")
         self.startDate = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())!
         self.cities = []
         
@@ -124,6 +135,7 @@ class MasterViewControllerTableViewController: UITableViewController {
 //        loadingPanel()s
         self.addCityUI.setTitle("+", for: .normal)
         
+        splitViewController?.delegate = self
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -168,25 +180,34 @@ class MasterViewControllerTableViewController: UITableViewController {
         return cc
     }
     
-  
-
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (!cities.isEmpty){
-            
+            print("select city")
 //            self.overlay?.removeFromSuperview()
-            
+//
             let selectedCity = cities[indexPath.row]
             delegate?.citySelected(selectedCity)
-            if let detailViewController = delegate as? ViewController,
-                let detailNavigationController = detailViewController.navigationController {
-                splitViewController?.showDetailViewController(detailNavigationController, sender: nil)
+            
+            if let detailViewController = delegate as? ViewController{
+                self.navigationController?.pushViewController(detailViewController, animated: true)
             }
+            
+            
+//            if let detailViewController = delegate as? ViewController,
+//                let detailNavigationController = detailViewController.navigationController
+//            {
+//                print("dnc")
+////                splitViewController?.showDetailViewController(detailNavigationController, sender: nil)
+////                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+////                let controller = storyboard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+//                self.navigationController?.pushViewController(detailViewController, animated: true)
+//            }
+//            self.tableView.isHidden = true
+//            performSegue(withIdentifier: "selectCity", sender: self)
 //            self.performSegue(withIdentifier: "ViewController", sender: self)
             
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//            let controller = storyboard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
-//            self.navigationController?.pushViewController(controller, animated: true)
+            
+            
 
             
         }
