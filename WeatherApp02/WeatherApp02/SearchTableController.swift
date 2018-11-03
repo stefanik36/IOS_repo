@@ -37,8 +37,6 @@ class SearchTableController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
-    // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         return search.count
     }
@@ -47,7 +45,6 @@ class SearchTableController: UITableViewController {
         return search.count
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCell", for: indexPath)
 

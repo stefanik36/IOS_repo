@@ -20,7 +20,7 @@ class CustomCell: UITableViewCell {
 //        return true
 //    }
 //}
-extension MasterViewControllerTableViewController: UISplitViewControllerDelegate, SomeProtocol {
+extension MasterViewControllerTableViewController: UISplitViewControllerDelegate, AddCityProtocol {
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
         return collapseDetailViewController
     }
@@ -148,6 +148,7 @@ class MasterViewControllerTableViewController: UITableViewController {
 //    }
     
     override func viewDidLoad() {
+        print("viewDidLoad")
         super.viewDidLoad()
 //        loadingPanel()s
         self.addCityUI.setTitle("+", for: .normal)
@@ -189,7 +190,6 @@ class MasterViewControllerTableViewController: UITableViewController {
         
         if(!cities.isEmpty){
             let city = cities[indexPath.row]
-//            print(city.name ?? "??")
             cc.cityUI.text = city.name ?? "?? "
             cc.tempUI.text = (city.temp).map{"\(String(format:"%.1f", $0))"} ?? "?? "
             if let x = (city.image).map({UIImage(data: $0)})  {cc.imageUI?.image = x;}
@@ -211,11 +211,13 @@ class MasterViewControllerTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (!cities.isEmpty){
             print("select city")
+            
 //            self.overlay?.removeFromSuperview()
             
             let selectedCity = cities[indexPath.row]
             delegate?.citySelected(selectedCity)
-            
+            let dvc = self.delegate
+            print("dvc: \(String(describing: dvc))")
             if let detailViewController = delegate as? ViewController{
                 print("delegate")
                 self.navigationController?.pushViewController(detailViewController, animated: true)
