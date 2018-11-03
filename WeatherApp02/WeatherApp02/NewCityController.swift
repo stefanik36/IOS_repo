@@ -7,17 +7,40 @@
 //
 
 import UIKit
-class SearchCell: UITableViewCell {
+
+
+protocol controls {
+    func add()
+}
+protocol SomeProtocol {
     
-    @IBOutlet weak var addUI: UIButton!
+    var index : String {get set}
+    var name : String{ get set}
+    
+    func addCityDelegate()
+}
+
+class SearchCell: UITableViewCell {
+    var delegate: controls?
+    
+//    @IBOutlet weak var addUI: UIButton!
     @IBOutlet weak var nameUI: UILabel!
     
-    @IBAction func add(_ sender: Any) {
-        print("ADD: \((nameUI.text)!)")
-    }
-}
-class NewCityController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+//    var index: String?
+//    var returnFunction: ((UIViewController) -> ())?;
     
+//    @IBAction func add(_ sender: Any) {
+//        print("ADD: \((nameUI.text)!)")
+////        self.delegate?.add()
+//
+//        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+//        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "MasterViewControllerTableViewController") as! MasterViewControllerTableViewController
+//        nextViewController.add(index: index!, name: (nameUI.text)!)
+//        returnFunction!(nextViewController)
+//    }
+}
+
+class NewCityController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 //    @IBOutlet weak var tableUI: SearchTableContrloller!
 //    @IBOutlet weak var tableUI: SearchTableController!
     @IBOutlet weak var tableUI: UITableView!
@@ -70,14 +93,54 @@ class NewCityController: UIViewController, UITableViewDelegate, UITableViewDataS
         return search.count
     }
     
+    func toMain(controller: UIViewController){
+//        _ = navigationController?.popViewController(animated: true)
+//        self.window?.rootViewController = controller
+        
+//        let i = navigationController?.viewControllers.index(of: self)
+//        let previousViewController = navigationController?.viewControllers[i!-1]
+        
+        let viewController = UIApplication.shared.keyWindow!.rootViewController?.children
+        for x in viewController! {
+            
+            print("a: \(x)")
+        }
+//        let viewController = self.splitViewController?.viewControllers.first
+        
+//        let viewController = UIApplication.shared.keyWindow!.rootViewController as! MasterViewControllerTableViewController
+        self.navigationController?.pushViewController(viewController![0], animated: true)
+        
+    }
+    
+    
+    var delegate : SomeProtocol?
+
+     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if (!search.isEmpty){
+            print("add city touch")
+            let result = Array(self.search)[indexPath.row]
+            
+            
+            
+            delegate?.index = result.key
+            delegate?.name = result.value
+        
+            delegate?.addCityDelegate()
+            _ = navigationController?.popViewController(animated: true)
+            
+        }
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCell", for: indexPath) as! SearchCell
 //        print("COUNT: \(search.count)")
         if(!search.isEmpty){
             let result = Array(self.search)[indexPath.row]
             cell.nameUI?.text = result.value
+//            cell.index = result.key
+//            cell.returnFunction = toMain
         }
-        return cell
+          return cell
     }
     
 

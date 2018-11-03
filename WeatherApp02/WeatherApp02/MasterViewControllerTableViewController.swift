@@ -20,7 +20,7 @@ class CustomCell: UITableViewCell {
 //        return true
 //    }
 //}
-extension MasterViewControllerTableViewController: UISplitViewControllerDelegate {
+extension MasterViewControllerTableViewController: UISplitViewControllerDelegate, SomeProtocol {
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
         return collapseDetailViewController
     }
@@ -49,6 +49,9 @@ class MasterViewControllerTableViewController: UITableViewController {
         }
     }
     var startDate: Date;
+    
+    var name: String = ""
+    var index: String = ""
     //var metaWeater: MetaWeater02Service?;
     
 //    func loadingPanel(){
@@ -100,6 +103,20 @@ class MasterViewControllerTableViewController: UITableViewController {
     
     func setData(city: CityInfo){
         cities.append(city)
+    }
+    
+//    func displaySecondVC() {
+//        let sc = SearchCell()
+//        sc.delegate = self
+//
+//        self.present(sc, animated: true)
+//    }
+    func add(index: String, name: String) {
+        addNewCity(cityIndex: index, cityName: name)
+        print("ADD?::: \(index) : \(name)")
+        UIView.animate(withDuration: 2){
+            self.view.layoutIfNeeded()
+        }
     }
 
     @IBAction func addCity(_ sender: Any) {
@@ -180,15 +197,27 @@ class MasterViewControllerTableViewController: UITableViewController {
         return cc
     }
     
+    func addCityDelegate() {
+        print("addCityDelegate: \(self.name) : \(self.index)")
+        addNewCity(cityIndex: index, cityName: name)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destVC = segue.destination as? NewCityController{
+            destVC.delegate = self
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (!cities.isEmpty){
             print("select city")
 //            self.overlay?.removeFromSuperview()
-//
+            
             let selectedCity = cities[indexPath.row]
             delegate?.citySelected(selectedCity)
             
             if let detailViewController = delegate as? ViewController{
+                print("delegate")
                 self.navigationController?.pushViewController(detailViewController, animated: true)
             }
             
