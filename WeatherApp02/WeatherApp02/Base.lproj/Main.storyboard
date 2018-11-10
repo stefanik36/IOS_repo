@@ -9,14 +9,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Detail View Controller-->
-        <scene sceneID="aux-z9-Zea">
-            <objects>
-                <viewController id="dd2-7V-bUb" customClass="DetailViewController" customModule="WeatherApp02" customModuleProvider="target" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8Jd-VZ-qCx" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-4695" y="275"/>
-        </scene>
         <!--New City Controller-->
         <scene sceneID="Kve-BB-6kO">
             <objects>
@@ -161,7 +153,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="F0p-VT-T7R">
-                                            <rect key="frame" x="325" y="4.6666666666666643" width="34" height="33"/>
+                                            <rect key="frame" x="324" y="3.6666666666666679" width="35" height="34"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="35" id="m16-ez-sHh"/>
                                                 <constraint firstAttribute="width" secondItem="F0p-VT-T7R" secondAttribute="height" multiplier="35:34" id="s5w-8W-SlI"/>
@@ -210,6 +202,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="bVB-bc-dAx">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </refreshControl>
                     <connections>
@@ -219,7 +212,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hca-Ek-Ige" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2290.4000000000001" y="-1182.2660098522167"/>
+            <point key="canvasLocation" x="-2730" y="-1168"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Eg5-Sz-VSU">
@@ -244,7 +237,6 @@
                     <connections>
                         <segue destination="bhB-BC-Anw" kind="relationship" relationship="masterViewController" id="LA3-bW-02s"/>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="detailViewController" id="a9P-mj-NCA"/>
-                        <segue destination="NvK-za-Zvb" kind="show" identifier="newCity" id="JTm-4n-0fg"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hZX-lu-XUL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -606,11 +598,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2290" y="-415"/>
+            <point key="canvasLocation" x="-2639" y="-480"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="9uI-oa-c1G"/>
         <segue reference="bDL-X3-h1b"/>
+        <segue reference="9uI-oa-c1G"/>
     </inferredMetricsTieBreakers>
 </document>

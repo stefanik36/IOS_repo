@@ -71,8 +71,71 @@ class MasterViewControllerTableViewController: UITableViewController {
 //        view.addSubview(overlay!)
 //
 //    }
+    var window: UIWindow?
+    func setDelegate02(){
+        let leftNavController = splitViewController!.viewControllers.first as? UINavigationController
+        
+        let masterViewController = leftNavController!.topViewController as? MasterViewControllerTableViewController
+        let detailViewControllerNew = (self.storyboard?.instantiateViewController(withIdentifier: "ViewController")) as! ViewController
+        masterViewController!.delegate = detailViewControllerNew
+    }
+    func setDelegate(vc: ViewController) -> ViewController?{
+        if var topController = UIApplication.shared.keyWindow?.rootViewController  {
+            print("1 \(topController)")
+            while let presentedViewController = topController.presentedViewController {
+                topController = presentedViewController
+                print("2 \(presentedViewController)")
+            }
+            
+            let last = splitViewController!.viewControllers.last as? UINavigationController
+            
+            print("last2: \(String(describing: last))")
+            print("count: \(splitViewController!.viewControllers.count)")
+            print("3 \(topController)")
+            let leftNavController = splitViewController!.viewControllers.first as? UINavigationController
+            print("\(String(describing: leftNavController))")
+            let masterViewController = leftNavController!.topViewController as? MasterViewControllerTableViewController
+            print("\(String(describing: masterViewController))")
+//            let detailViewController = splitViewController!.viewControllers.last as? ViewController
+            print("\(String(describing: vc))")
+            masterViewController!.delegate = vc
+            return vc
+//            topController!.delegate = detailViewController
+            
+            // topController should now be your topmost view controller
+        }
+//        print(":::::::::::")
+//        let splitViewController = window?.rootViewController as? UISplitViewController
+//        print("\(String(describing: splitViewController))")
+//        let leftNavController = splitViewController!.viewControllers.first //as? UINavigationController
+//        print("\(String(describing: leftNavController))")
+//        let masterViewController = leftNavController!.topViewController as? MasterViewControllerTableViewController
+//        print("\(String(describing: masterViewController))")
+//        let detailViewController = splitViewController!.viewControllers.last as? ViewController
+//        print("\(String(describing: detailViewController))")
+//        guard let splitViewController = window?.rootViewController as? UISplitViewController,
+//            let leftNavController = splitViewController.viewControllers.first as? UINavigationController,
+//            let masterViewController = leftNavController.topViewController as? MasterViewControllerTableViewController,
+//            let detailViewController = splitViewController.viewControllers.last as? ViewController
+//            //            let rightNavController = splitViewController.viewControllers.last as? UINavigationController
+//            //            let detailViewController = rightNavController.topViewController as? ViewController
+//
+//            else { fatalError() }
+        
+        print("APP DELEGATE")
+        
+//        let firstCity = masterViewController.cities.first
+//        detailViewController.city = firstCity
+//        masterViewController!.delegate = detailViewController
+//        detailViewController.navigationItem.leftItemsSupplementBackButton = true
+//        detailViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
+        return nil
+    }
     
     func refresh(){
+        
+//        setDelegate()
+        
         print("refresh")
         DispatchQueue.main.async {
             self.tableView.reloadData()
@@ -213,34 +276,23 @@ class MasterViewControllerTableViewController: UITableViewController {
             print("select city")
             
 //            self.overlay?.removeFromSuperview()
-            
+           
+//            print(splitViewController!.viewControllers.count)
             let selectedCity = cities[indexPath.row]
             delegate?.citySelected(selectedCity)
-            let dvc = self.delegate
-            print("dvc: \(String(describing: dvc))")
+            
+            
+            let detailViewController = delegate as? ViewController
+            if(detailViewController == nil){
+                print("set delegate 02")
+                setDelegate02()
+            }
+    
             if let detailViewController = delegate as? ViewController{
                 print("delegate")
+                detailViewController.city = selectedCity
                 self.navigationController?.pushViewController(detailViewController, animated: true)
             }
-            
-            
-//            if let detailViewController = delegate as? ViewController,
-//                let detailNavigationController = detailViewController.navigationController
-//            {
-//                print("dnc")
-////                splitViewController?.showDetailViewController(detailNavigationController, sender: nil)
-////                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-////                let controller = storyboard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
-//                self.navigationController?.pushViewController(detailViewController, animated: true)
-//            }
-//            self.tableView.isHidden = true
-//            performSegue(withIdentifier: "selectCity", sender: self)
-//            self.performSegue(withIdentifier: "ViewController", sender: self)
-            
-            
-            
-
-            
         }
     }
     

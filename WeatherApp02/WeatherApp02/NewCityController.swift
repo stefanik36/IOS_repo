@@ -45,6 +45,7 @@ class NewCityController: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     @IBAction func cancel(_ sender: Any) {
+//        dismiss(animated: true, completion: nil)
         _ = navigationController?.popViewController(animated: true)
     }
     
@@ -84,7 +85,7 @@ class NewCityController: UIViewController, UITableViewDelegate, UITableViewDataS
             let result = Array(self.search)[indexPath.row]
             cell.nameUI?.text = result.value
         }
-          return cell
+        return cell
     }
     
 

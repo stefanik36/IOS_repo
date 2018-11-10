@@ -11,7 +11,7 @@ import Foundation
 
 class MetaWeater02Service{
     init(){
-        self.maxRequests = 2;
+        self.maxRequests = 12;
     }
     
     init(maxRequests:Int){

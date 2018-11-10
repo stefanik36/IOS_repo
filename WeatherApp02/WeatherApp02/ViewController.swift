@@ -210,6 +210,7 @@ class ViewController: UIViewController {
 
 extension ViewController: CitySelectionDelegate {
     func citySelected(_ newCity: CityInfo) {
+        print("CS")
         city = newCity
     }
 }
