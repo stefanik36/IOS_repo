@@ -27,6 +27,30 @@ class MetaWeater02Service{
     var completionHandler: ((CityInfo) -> ())?;
     
     
+    
+    func findCityByLocation(latitude:Double, longitude:Double, completionHandler: @escaping (String, String) -> ()){
+        let url = URL(string: "https://www.metaweather.com/api/location/search/?lattlong=\(latitude),\(longitude)")!
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            guard error == nil else {
+                print("error:", error!)
+                return
+            }
+            
+            guard let data = data else {
+                print("No data!")
+                return
+                
+            }
+            let json = try! JSONSerialization.jsonObject(with: data, options: []) as! [[String: AnyObject]]
+            
+            let index = (json[0]["woeid"]) as! Int
+            let name =  (json[0]["title"]) as! String
+            print("fcbl: \(index): \(name)")
+            completionHandler("\(index)", name)
+        }
+        task.resume()
+    }
+    
     func findCity(name:String, completionHandler: @escaping ([String:String]) -> ()){
         let url = URL(string: "https://www.metaweather.com/api/location/search/?query=\(name)")!
         

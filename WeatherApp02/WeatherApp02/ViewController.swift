@@ -196,15 +196,14 @@ class ViewController: UIViewController {
             self.dateUI.text = self.dateFormatterPrint.string(from: date)
             
             self.setButtonsAbility();
-//
-//            self.overlay?.removeFromSuperview()
         }
         
     }
     
-//    func setFirst(){
-//        setWeather(date: startDate)
-//    }
+    @IBAction func showMap(_ sender: Any!) {
+        print("SHOW MAP")
+        performSegue(withIdentifier: "showMap", sender: sender)
+    }
 }
 
 

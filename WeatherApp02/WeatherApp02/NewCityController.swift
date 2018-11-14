@@ -7,7 +7,8 @@
 //
 
 import UIKit
-
+import CoreLocation
+import MapKit
 
 protocol AddCityProtocol {
     var index : String {get set}
@@ -19,24 +20,83 @@ class SearchCell: UITableViewCell {
     @IBOutlet weak var nameUI: UILabel!
 }
 
-class NewCityController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class NewCityController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
     @IBOutlet weak var tableUI: UITableView!
     @IBOutlet weak var inputUI: UITextField!
+    @IBOutlet weak var closeUI: UILabel!
     
     var delegate : AddCityProtocol?
-    
+    var locationManager: CLLocationManager!
     var search:[String:String] = [:]{
         didSet{
             refresh()
         }
     }
+    var closeIndex: String?;
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableUI.dataSource = self;
         self.tableUI.delegate = self;
+        
+        
+        print("location :")
+        // Ask for Authorisation from the User.
+//        self.locationManager.requestAlwaysAuthorization()
+        
+        // For use in foreground
+//        self.locationManager.requestWhenInUseAuthorization()
+        if (CLLocationManager.locationServicesEnabled())
+        {
+            print("location enabled")
+            locationManager = CLLocationManager()
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestAlwaysAuthorization()
+            locationManager.startUpdatingLocation()
+        }
+        
+        
     }
+//    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
+//    {
+//
+//        let location = locations.last! as CLLocation
+//
+//        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+//        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+//
+//        self.map.setRegion(region, animated: true)
+//    }
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("LM")
+        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+        print("locations = \(locValue.latitude) \(locValue.longitude)")
+        let metaWeater = MetaWeater02Service()
+        metaWeater.findCityByLocation(latitude: locValue.latitude, longitude: locValue.longitude, completionHandler: locationResult)
+    }
+    
+    func locationResult(index: String, name: String){
+        print("LOCATION SEARCH: \(index):\(name)")
+        DispatchQueue.main.async {
+            self.closeUI.text = name;
+            self.closeIndex = index;
+        }
+    }
+    @IBAction func ChooseCity(_ sender: Any) {
+        print("add city touch location")
+       doDelegate(index: self.closeIndex!, name: self.closeUI.text!)
+    }
+    
+    func doDelegate(index:String, name:String){
+        delegate?.index = index
+        delegate?.name = name
+        delegate?.addCityDelegate()
+        _ = navigationController?.popViewController(animated: true)
+    }
+    
+    
     func refresh(){
         DispatchQueue.main.async {
             self.tableUI.reloadData()
@@ -72,10 +132,7 @@ class NewCityController: UIViewController, UITableViewDelegate, UITableViewDataS
         if (!search.isEmpty){
             print("add city touch")
             let result = Array(self.search)[indexPath.row]
-            delegate?.index = result.key
-            delegate?.name = result.value
-            delegate?.addCityDelegate()
-            _ = navigationController?.popViewController(animated: true)
+            doDelegate(index: result.key, name: result.value)
         }
     }
     
