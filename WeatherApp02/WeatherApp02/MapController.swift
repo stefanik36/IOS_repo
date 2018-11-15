@@ -8,36 +8,41 @@
 
 import UIKit
 import CoreLocation
-//import MapKit
+import MapKit
 
 class MapController: UIViewController, CLLocationManagerDelegate {
+    @IBOutlet weak var cityNameUI: UILabel!
+    @IBOutlet weak var mapUI: MKMapView!
+    var locationManager: CLLocationManager!
+    
+    var cityName: String?;
 
-//    @IBOutlet weak var MapUI: MKMapView!
-//    var locationManager: CLLocationManager!
-//
-//    override func viewDidLoad()
-//    {
-//        super.viewDidLoad()
-//
-//        if (CLLocationManager.locationServicesEnabled())
-//        {
-//            locationManager = CLLocationManager()
-//            locationManager.delegate = self
-//            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-//            locationManager.requestAlwaysAuthorization()
-//            locationManager.startUpdatingLocation()
-//        }
-//    }
-//
-//    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
-//    {
-//
-//        let location = locations.last! as CLLocation
-//
-//        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-//        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-//
-//        self.MapUI.setRegion(region, animated: true)
-//    }
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        self.cityNameUI.text = cityName
+
+        if (CLLocationManager.locationServicesEnabled())
+        {
+            locationManager = CLLocationManager()
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestAlwaysAuthorization()
+            locationManager.startUpdatingLocation()
+        }
+        let metaWeater = MetaWeaterService()
+        metaWeater.findCityLocation(name: self.cityName!, completionHandler: showMap)
+    }
+    
+    
+    func showMap(latt:Double, long:Double){
+        let center = CLLocationCoordinate2D(latitude: latt, longitude: long)
+        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
+        self.mapUI.setRegion(region, animated: true)
+        
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = CLLocationCoordinate2D(latitude: latt, longitude: long)
+        self.mapUI.addAnnotation(annotation)
+    }
 
 }

@@ -9,9 +9,9 @@
 import Foundation
 
 
-class MetaWeater02Service{
+class MetaWeaterService{
     init(){
-        self.maxRequests = 12;
+        self.maxRequests = 2;
     }
     
     init(maxRequests:Int){
@@ -26,6 +26,38 @@ class MetaWeater02Service{
     var calendar:Calendar = Calendar.current;
     var completionHandler: ((CityInfo) -> ())?;
     
+    
+    func findCityLocation(name:String, completionHandler: @escaping (Double, Double) -> ()){
+        let rawString = "https://www.metaweather.com/api/location/search/?query=\(name)"
+        let urlString = rawString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+        let url = URL(string: urlString!)!
+        
+        
+        
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            guard error == nil else {
+                print("error:", error!)
+                return
+            }
+            
+            guard let data = data else {
+                print("No data!")
+                return
+            }
+            let json = try! JSONSerialization.jsonObject(with: data, options: []) as! [[String: AnyObject]]
+
+            let latt_long = (json[0]["latt_long"]) as! String
+            let trimmedString = latt_long.replacingOccurrences(of: " ", with: "")
+            let latt_long_arr = trimmedString.components(separatedBy: ",")
+            
+            let latt = Double(latt_long_arr[0])
+            let long = Double(latt_long_arr[1])
+            completionHandler(latt!, long!)
+
+            
+        }
+        task.resume()
+    }
     
     
     func findCityByLocation(latitude:Double, longitude:Double, completionHandler: @escaping (String, String) -> ()){
@@ -45,7 +77,7 @@ class MetaWeater02Service{
             
             let index = (json[0]["woeid"]) as! Int
             let name =  (json[0]["title"]) as! String
-            print("fcbl: \(index): \(name)")
+            
             completionHandler("\(index)", name)
         }
         task.resume()
@@ -93,43 +125,25 @@ class MetaWeater02Service{
             cityIndex: String,
             cityName: String
         ){
-      //  print("end index: \(json.endIndex) img: \(String(describing: img))")
-     //   print("\(json.endIndex) && cr: \(currentRequest) mr: \(maxRequests)");
         
         if(json.endIndex>0){
             let wi = WeaterInfo(dictionary: json[json.endIndex/2])
             wi.image = img!
-        //    print("wi.image: \(wi.image!)")
             weaterInfos.updateValue(wi, forKey: date)
             
         }
         if(currentRequest >= maxRequests && !isComplete){
             self.isComplete = true
             let first = weaterInfos.first?.value
-//            print("_________________")
-//            print((first?.image)!)
             self.completionHandler!(
                 CityInfo(name: cityName, index: cityIndex, temp: (first?.theTemp)!, image: (first?.image)!, weaterInfos: weaterInfos)
             )
         }
         currentRequest = currentRequest+1
-        
-        /*
-         if(json.endIndex>0 && currentRequest<maxRequests){
-         let wi = WeaterInfo(dictionary: json[json.endIndex/2])
-         wi.image = img
-         print("\(img!.debugDescription)")
-         weaterInfos.updateValue(wi, forKey: date)
-         urrentRequest = currentRequest+1
-         }else{
-         self.completionHandler(weaterInfos)
-         }
-         */
     }
     
     private func getImageData(name: String) -> Data{
         let url = URL(string: "https://www.metaweather.com/static/img/weather/png/\(name).png")
-//        print("IMG URL \(String(describing: url))")
         let data = try? Data(contentsOf: url!)
         return data!
     }
@@ -146,7 +160,6 @@ class MetaWeater02Service{
         let day = calendar.component(.day, from: date)
         
         let url = URL(string: "https://www.metaweather.com/api/location/\(cityIndex)/\(year)/\(month)/\(day)/")!
-    //    print(url)
         
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             guard error == nil else {
@@ -171,14 +184,7 @@ class MetaWeater02Service{
     
 }
 
-
-
-
-
-
-
-
-
+/*
 class MetaWeaterService{
     
     init(startDate: Date, completionHandler: @escaping ([Date: WeaterInfo]) -> ()) {
@@ -271,3 +277,4 @@ class MetaWeaterService{
      }
     
 }
+*/

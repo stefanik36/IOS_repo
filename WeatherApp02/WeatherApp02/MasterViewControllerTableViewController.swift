@@ -14,12 +14,7 @@ class CustomCell: UITableViewCell {
     @IBOutlet weak var tempUI: UILabel!
     @IBOutlet weak var imageUI: UIImageView!
 }
-//
-//extension AppDelegate : UISplitViewControllerDelegate {
-//    func splitViewController(_ svc: UISplitViewController, collapseSecondary vc2: UIViewController, onto vc1: UIViewController) -> Bool {
-//        return true
-//    }
-//}
+
 extension MasterViewControllerTableViewController: UISplitViewControllerDelegate, AddCityProtocol {
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
         return collapseDetailViewController
@@ -34,17 +29,11 @@ class MasterViewControllerTableViewController: UITableViewController {
 
     @IBOutlet weak var addCityUI: UIButton!
     
-//    var overlay : UIView?
-    
     weak var delegate: CitySelectionDelegate?
     var defaultCities = ["Paris","London","Barcelona"]
     
     var cities: [CityInfo]{
         didSet{
-//            print("ARR CHANGE \(cities.endIndex)")
-//            for c in cities {
-//                print(c.name!)
-//            }
             refresh()
         }
     }
@@ -52,91 +41,18 @@ class MasterViewControllerTableViewController: UITableViewController {
     
     var name: String = ""
     var index: String = ""
-    //var metaWeater: MetaWeater02Service?;
     
-//    func loadingPanel(){
-//
-//        overlay = UIView(frame: view.frame)
-//        let title = UILabel()
-//        title.text = "Loading..."
-//        title.numberOfLines = 0
-//        title.textAlignment = .center
-//        title.textColor = UIColor.white
-//        title.sizeToFit()
-//        title.center = overlay!.center
-//        overlay!.addSubview(title)
-//
-//        overlay!.backgroundColor = UIColor.black
-//        overlay!.alpha = 0.8
-//        view.addSubview(overlay!)
-//
-//    }
     var window: UIWindow?
-    func setDelegate02(){
+    
+    
+    func setDelegate(){
         let leftNavController = splitViewController!.viewControllers.first as? UINavigationController
-        
         let masterViewController = leftNavController!.topViewController as? MasterViewControllerTableViewController
         let detailViewControllerNew = (self.storyboard?.instantiateViewController(withIdentifier: "ViewController")) as! ViewController
         masterViewController!.delegate = detailViewControllerNew
     }
-    func setDelegate(vc: ViewController) -> ViewController?{
-        if var topController = UIApplication.shared.keyWindow?.rootViewController  {
-            print("1 \(topController)")
-            while let presentedViewController = topController.presentedViewController {
-                topController = presentedViewController
-                print("2 \(presentedViewController)")
-            }
-            
-            let last = splitViewController!.viewControllers.last as? UINavigationController
-            
-            print("last2: \(String(describing: last))")
-            print("count: \(splitViewController!.viewControllers.count)")
-            print("3 \(topController)")
-            let leftNavController = splitViewController!.viewControllers.first as? UINavigationController
-            print("\(String(describing: leftNavController))")
-            let masterViewController = leftNavController!.topViewController as? MasterViewControllerTableViewController
-            print("\(String(describing: masterViewController))")
-//            let detailViewController = splitViewController!.viewControllers.last as? ViewController
-            print("\(String(describing: vc))")
-            masterViewController!.delegate = vc
-            return vc
-//            topController!.delegate = detailViewController
-            
-            // topController should now be your topmost view controller
-        }
-//        print(":::::::::::")
-//        let splitViewController = window?.rootViewController as? UISplitViewController
-//        print("\(String(describing: splitViewController))")
-//        let leftNavController = splitViewController!.viewControllers.first //as? UINavigationController
-//        print("\(String(describing: leftNavController))")
-//        let masterViewController = leftNavController!.topViewController as? MasterViewControllerTableViewController
-//        print("\(String(describing: masterViewController))")
-//        let detailViewController = splitViewController!.viewControllers.last as? ViewController
-//        print("\(String(describing: detailViewController))")
-//        guard let splitViewController = window?.rootViewController as? UISplitViewController,
-//            let leftNavController = splitViewController.viewControllers.first as? UINavigationController,
-//            let masterViewController = leftNavController.topViewController as? MasterViewControllerTableViewController,
-//            let detailViewController = splitViewController.viewControllers.last as? ViewController
-//            //            let rightNavController = splitViewController.viewControllers.last as? UINavigationController
-//            //            let detailViewController = rightNavController.topViewController as? ViewController
-//
-//            else { fatalError() }
-        
-        print("APP DELEGATE")
-        
-//        let firstCity = masterViewController.cities.first
-//        detailViewController.city = firstCity
-//        masterViewController!.delegate = detailViewController
-//        detailViewController.navigationItem.leftItemsSupplementBackButton = true
-//        detailViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
-        return nil
-    }
     
     func refresh(){
-        
-//        setDelegate()
-        
-        print("refresh")
         DispatchQueue.main.async {
             self.tableView.reloadData()
             self.refreshControl = UIRefreshControl()
@@ -144,13 +60,12 @@ class MasterViewControllerTableViewController: UITableViewController {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        print("init")
         self.startDate = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())!
         self.cities = []
         
         super.init(coder: aDecoder)
         for cn in defaultCities {
-            let metaWeater = MetaWeater02Service()
+            let metaWeater = MetaWeaterService()
             metaWeater.findCity(name: cn, completionHandler: addFirstAsCity)
         }
     }
@@ -160,7 +75,7 @@ class MasterViewControllerTableViewController: UITableViewController {
     }
     
     func addNewCity(cityIndex: String, cityName: String){
-        let metaWeater = MetaWeater02Service()
+        let metaWeater = MetaWeaterService()
         metaWeater.getData(cityIndex: cityIndex, cityName: cityName, startDate: startDate, completionHandler: setData)
     }
     
@@ -168,47 +83,16 @@ class MasterViewControllerTableViewController: UITableViewController {
         cities.append(city)
     }
     
-//    func displaySecondVC() {
-//        let sc = SearchCell()
-//        sc.delegate = self
-//
-//        self.present(sc, animated: true)
-//    }
     func add(index: String, name: String) {
         addNewCity(cityIndex: index, cityName: name)
-        print("ADD?::: \(index) : \(name)")
         UIView.animate(withDuration: 2){
             self.view.layoutIfNeeded()
         }
     }
 
     @IBAction func addCity(_ sender: Any) {
-        print("new City")
         performSegue(withIdentifier: "newCity", sender: sender)
     }
-    //    @IBAction func addCity02(_ sender: Any) {
-//        print("new City")
-//        performSegue(withIdentifier: "newCity", sender: sender)
-//    }
-    
-    
-    
-//    @IBAction func addCity(_ sender: UIButton) {
-//        print("new City")
-//        performSegue(withIdentifier: "newCity", sender: sender)
-//    }
-    
-//    override func performSegue(withIdentifier identifier: String, sender: Any?) {
-//        print("segue - \(identifier)")
-//
-////        if let destinationViewController = segue.destination as? <NewCityController> {
-////            if let button = sender as? UIButton {
-////                secondViewController.<buttonIndex> = button.tag
-////                // Note: add/define var buttonIndex: Int = 0 in <YourDestinationViewController> and print there in viewDidLoad.
-////            }
-////
-////        }
-//    }
     
     override func viewDidLoad() {
         print("viewDidLoad")
@@ -285,7 +169,7 @@ class MasterViewControllerTableViewController: UITableViewController {
             let detailViewController = delegate as? ViewController
             if(detailViewController == nil){
                 print("set delegate 02")
-                setDelegate02()
+                setDelegate()
             }
     
             if let detailViewController = delegate as? ViewController{

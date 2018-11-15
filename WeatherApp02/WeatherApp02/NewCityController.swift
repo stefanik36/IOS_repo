@@ -73,7 +73,7 @@ class NewCityController: UIViewController, UITableViewDelegate, UITableViewDataS
         print("LM")
         let locValue:CLLocationCoordinate2D = manager.location!.coordinate
         print("locations = \(locValue.latitude) \(locValue.longitude)")
-        let metaWeater = MetaWeater02Service()
+        let metaWeater = MetaWeaterService()
         metaWeater.findCityByLocation(latitude: locValue.latitude, longitude: locValue.longitude, completionHandler: locationResult)
     }
     
@@ -86,7 +86,9 @@ class NewCityController: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     @IBAction func ChooseCity(_ sender: Any) {
         print("add city touch location")
-       doDelegate(index: self.closeIndex!, name: self.closeUI.text!)
+        if(self.closeIndex != nil && self.closeUI.text != nil){
+            doDelegate(index: self.closeIndex!, name: self.closeUI.text!)
+        }
     }
     
     func doDelegate(index:String, name:String){
@@ -105,14 +107,13 @@ class NewCityController: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     @IBAction func cancel(_ sender: Any) {
-//        dismiss(animated: true, completion: nil)
         _ = navigationController?.popViewController(animated: true)
     }
     
     @IBAction func search(_ sender: Any) {
         print("search:")
         print(inputUI.text ?? "??")
-        let metaWeater = MetaWeater02Service()
+        let metaWeater = MetaWeaterService()
         if let name = inputUI.text {
             if(name != "" && !name.isEmpty){
                 metaWeater.findCity(name: name, completionHandler: searchResult)

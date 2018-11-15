@@ -538,18 +538,22 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Vb-xv-5vz">
-                                <rect key="frame" x="233" y="88" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1q7-y4-S0f">
+                                <rect key="frame" x="212.66666666666666" y="93" width="30" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="zhJ-Bm-cHn"/>
+                                </constraints>
                                 <state key="normal" title="Map"/>
                                 <connections>
-                                    <action selector="showMap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="70C-8q-cP0"/>
+                                    <action selector="showMapButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="W63-1R-PRC"/>
+                                    <segue destination="C0h-Gv-VXt" kind="show" identifier="showMap" id="t6V-xW-m3s"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="gaq-vA-4xq" secondAttribute="trailing" constant="10" id="08J-Jv-RzO"/>
+                            <constraint firstItem="1q7-y4-S0f" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="5" id="09k-v6-jCZ"/>
                             <constraint firstItem="jDC-2c-Uc8" firstAttribute="top" secondItem="OYQ-oq-LtY" secondAttribute="bottom" id="3rg-wt-AQl"/>
                             <constraint firstItem="Hat-Gu-9kb" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4cV-qO-KgO"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="BnQ-C3-bo5" secondAttribute="trailing" constant="10" id="5hL-gg-gjj"/>
@@ -608,6 +612,7 @@
                             <constraint firstItem="wOY-2O-dCU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="txZ-He-kNo"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="FCI-fH-a4S" secondAttribute="trailing" constant="10" id="u60-0R-IAe"/>
                             <constraint firstItem="YHq-Fd-JhY" firstAttribute="top" secondItem="KN3-9Z-NwX" secondAttribute="bottom" id="uPM-Mk-7to"/>
+                            <constraint firstItem="1q7-y4-S0f" firstAttribute="leading" secondItem="b9N-S1-rzd" secondAttribute="trailing" constant="10" id="ut8-wj-O86"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="FCI-fH-a4S" secondAttribute="trailing" constant="10" id="vbR-s9-zaM"/>
                             <constraint firstItem="BnQ-C3-bo5" firstAttribute="top" secondItem="gaq-vA-4xq" secondAttribute="bottom" id="vbY-jp-WnV"/>
                             <constraint firstItem="OYQ-oq-LtY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="wVF-Oh-rgJ"/>
@@ -633,7 +638,6 @@
                         <outlet property="windDirectionCompassUI" destination="KLN-XJ-8bp" id="Lxt-Pk-LIf"/>
                         <outlet property="windDirectionUI" destination="xiZ-1Q-Uil" id="ayP-UL-HHk"/>
                         <outlet property="windSpeedUI" destination="NAX-ua-8qZ" id="sPm-Hn-TCY"/>
-                        <segue destination="i5A-ff-GMP" kind="show" identifier="showMap" id="Ufj-r8-S8r"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -641,29 +645,43 @@
             <point key="canvasLocation" x="-2639" y="-480"/>
         </scene>
         <!--Map Controller-->
-        <scene sceneID="YFP-Tn-AeX">
+        <scene sceneID="7dW-pS-QA7">
             <objects>
-                <viewController id="i5A-ff-GMP" customClass="MapController" customModule="WeatherApp02" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="aH0-Ys-yiM" customClass="MapController" customModule="WeatherApp02" customModuleProvider="target">
+                <viewController id="C0h-Gv-VXt" customClass="MapController" customModule="WeatherApp02" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="jxM-D7-WVG">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="tRa-9K-sKQ">
-                                <rect key="frame" x="16" y="185" width="343" height="593"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="In2-iQ-AeN">
+                                <rect key="frame" x="166.66666666666666" y="118" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="nFq-7L-rNQ">
+                                <rect key="frame" x="10" y="149" width="355" height="609"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="jsh-O3-62y"/>
-                        <connections>
-                            <outlet property="MapUI" destination="tRa-9K-sKQ" id="e3w-VR-FC6"/>
-                        </connections>
+                        <constraints>
+                            <constraint firstItem="6Md-dt-aQf" firstAttribute="bottom" secondItem="nFq-7L-rNQ" secondAttribute="bottom" constant="20" id="5gh-Ga-HCk"/>
+                            <constraint firstItem="nFq-7L-rNQ" firstAttribute="leading" secondItem="6Md-dt-aQf" secondAttribute="leading" constant="10" id="8Ii-Ll-dZ2"/>
+                            <constraint firstItem="In2-iQ-AeN" firstAttribute="centerX" secondItem="jxM-D7-WVG" secondAttribute="centerX" id="BJt-nd-LIc"/>
+                            <constraint firstItem="6Md-dt-aQf" firstAttribute="trailing" secondItem="nFq-7L-rNQ" secondAttribute="trailing" constant="10" id="Gid-dL-9SJ"/>
+                            <constraint firstItem="nFq-7L-rNQ" firstAttribute="top" secondItem="In2-iQ-AeN" secondAttribute="bottom" constant="10" id="VDk-b8-LHs"/>
+                            <constraint firstItem="In2-iQ-AeN" firstAttribute="top" secondItem="6Md-dt-aQf" secondAttribute="top" constant="30" id="WDw-CM-Knt"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Md-dt-aQf"/>
                     </view>
-                    <navigationItem key="navigationItem" id="3sD-M4-d1W"/>
+                    <navigationItem key="navigationItem" id="wVa-wZ-5yJ"/>
+                    <connections>
+                        <outlet property="cityNameUI" destination="In2-iQ-AeN" id="CWO-63-myc"/>
+                        <outlet property="mapUI" destination="nFq-7L-rNQ" id="jGu-2e-PiV"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="t3C-HA-xdz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qaK-VF-MTU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1735" y="-480"/>
+            <point key="canvasLocation" x="-1685" y="-631"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

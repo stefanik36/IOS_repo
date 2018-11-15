@@ -9,8 +9,6 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-    
     @IBOutlet weak var cityUI: UILabel!
     
     @IBOutlet weak var minTempUI: UITextField!
@@ -33,21 +31,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var prevUI: UIButton!
     @IBOutlet weak var nextUI: UIButton!
     
-    
-//    var overlay : UIView?
-    
-    
-    
-//    var startDate = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())!;
-//    var metaWeater:MetaWeaterService?;
-//    var weaterInfos: [Date: WeaterInfo]?;
-    
-    
     var calendar:Calendar = Calendar.current;
     var currentDate:Date?;
     let dateFormatterPrint = DateFormatter()
-    
-    
     
     var city: CityInfo?{
         didSet{
@@ -55,30 +41,9 @@ class ViewController: UIViewController {
             if let x = (city?.index)  {
                 
                 loadCity(cityIndex: x)
-            } 
-            
-            
-  //          print("DID SET \(city?.name ?? "unknown??")")
+            }
         }
     }
-    
-//    func loadingPanel(){
-//        
-//        overlay = UIView(frame: view.frame)
-//        let title = UILabel()
-//        title.text = "Loading..."
-//        title.numberOfLines = 0
-//        title.textAlignment = .center
-//        title.textColor = UIColor.white
-//        title.sizeToFit()
-//        title.center = overlay!.center
-//        overlay!.addSubview(title)
-//        
-//        overlay!.backgroundColor = UIColor.black
-//        overlay!.alpha = 0.8
-//        view.addSubview(overlay!)
-//
-//    }
     
     func prepareView(){
         self.cityUI.textAlignment = .center
@@ -106,28 +71,20 @@ class ViewController: UIViewController {
     func preLoad(){
         dateFormatterPrint.dateFormat = "dd.MM.yyyy"
         prepareView();
-//        self.metaWeater = MetaWeaterService(
-//            startDate: startDate,
-//            completionHandler: handleData
-//        )
     }
     
     func loadCity(cityIndex : String){
-        
-//        loadingPanel()
         let duplicate = (city?.weaterInfos)!
         self.currentDate = duplicate.sorted(by: { (s1: (Date,WeaterInfo), s2: (Date,WeaterInfo)) -> Bool in
             return s1.0 < s2.0
         }).first?.key
         setWeather(date: self.currentDate!)
-//        self.metaWeater!.getData(cityIndex: cityIndex);
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         preLoad()
-//        load()
     }
     
     @IBAction func nextButton(_ sender: Any) {
@@ -136,11 +93,6 @@ class ViewController: UIViewController {
     @IBAction func prevButton(_ sender: Any) {
         setWeather(date: prev())
     }
-    
-//    func handleData(weaterInfos: [Date: WeaterInfo]){
-//        self.weaterInfos = weaterInfos
-//        setFirst()
-//     }
     
     func next() -> Date{
         return calendar.date(byAdding: .day, value: 1, to: currentDate!)!
@@ -167,9 +119,6 @@ class ViewController: UIViewController {
         
         let wi = self.city?.weaterInfos![date]
         self.currentDate = date
-        
- //       print("set weather \(self.dateFormatterPrint.string(from: date)) \(String(describing: wi)) img:")
- //       print((wi?.image)!)
         
         DispatchQueue.main.async {
             
@@ -199,17 +148,20 @@ class ViewController: UIViewController {
         }
         
     }
-    
-    @IBAction func showMap(_ sender: Any!) {
-        print("SHOW MAP")
-        performSegue(withIdentifier: "showMap", sender: sender)
+    @IBAction func showMapButton(_ sender: Any) {
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showMap" {
+            if let destinationVC = segue.destination as? MapController {
+                destinationVC.cityName = self.city?.name
+            }
+        }
     }
 }
 
 
 extension ViewController: CitySelectionDelegate {
     func citySelected(_ newCity: CityInfo) {
-        print("CS")
         city = newCity
     }
 }
