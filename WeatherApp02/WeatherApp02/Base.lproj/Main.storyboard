@@ -131,7 +131,7 @@
         <!--Daniel Stefanik-->
         <scene sceneID="bvP-th-kJv">
             <objects>
-                <tableViewController storyboardIdentifier="MasterViewControllerTableViewController" clearsSelectionOnViewWillAppear="NO" id="7zS-Gj-89L" customClass="MasterViewControllerTableViewController" customModule="WeatherApp02" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="MasterViewControllerTableViewController" clearsSelectionOnViewWillAppear="NO" id="7zS-Gj-89L" customClass="MasterViewControllerTableView" customModule="WeatherApp02" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="fwg-Sy-Iby">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

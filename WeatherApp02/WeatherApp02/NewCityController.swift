@@ -40,16 +40,8 @@ class NewCityController: UIViewController, UITableViewDelegate, UITableViewDataS
         self.tableUI.dataSource = self;
         self.tableUI.delegate = self;
         
-        
-        print("location :")
-        // Ask for Authorisation from the User.
-//        self.locationManager.requestAlwaysAuthorization()
-        
-        // For use in foreground
-//        self.locationManager.requestWhenInUseAuthorization()
         if (CLLocationManager.locationServicesEnabled())
         {
-            print("location enabled")
             locationManager = CLLocationManager()
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -59,33 +51,19 @@ class NewCityController: UIViewController, UITableViewDelegate, UITableViewDataS
         
         
     }
-//    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
-//    {
-//
-//        let location = locations.last! as CLLocation
-//
-//        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-//        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-//
-//        self.map.setRegion(region, animated: true)
-//    }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("LM")
         let locValue:CLLocationCoordinate2D = manager.location!.coordinate
-        print("locations = \(locValue.latitude) \(locValue.longitude)")
         let metaWeater = MetaWeaterService()
         metaWeater.findCityByLocation(latitude: locValue.latitude, longitude: locValue.longitude, completionHandler: locationResult)
     }
     
     func locationResult(index: String, name: String){
-        print("LOCATION SEARCH: \(index):\(name)")
         DispatchQueue.main.async {
             self.closeUI.text = name;
             self.closeIndex = index;
         }
     }
     @IBAction func ChooseCity(_ sender: Any) {
-        print("add city touch location")
         if(self.closeIndex != nil && self.closeUI.text != nil){
             doDelegate(index: self.closeIndex!, name: self.closeUI.text!)
         }
@@ -111,8 +89,6 @@ class NewCityController: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     @IBAction func search(_ sender: Any) {
-        print("search:")
-        print(inputUI.text ?? "??")
         let metaWeater = MetaWeaterService()
         if let name = inputUI.text {
             if(name != "" && !name.isEmpty){
@@ -131,7 +107,6 @@ class NewCityController: UIViewController, UITableViewDelegate, UITableViewDataS
     
      func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (!search.isEmpty){
-            print("add city touch")
             let result = Array(self.search)[indexPath.row]
             doDelegate(index: result.key, name: result.value)
         }
@@ -145,7 +120,5 @@ class NewCityController: UIViewController, UITableViewDelegate, UITableViewDataS
         }
         return cell
     }
-    
-
     
 }
